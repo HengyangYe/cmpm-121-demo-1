@@ -2,6 +2,7 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
+// Step 1
 const gameName = "My L❤️vely game";
 document.title = gameName;
 
@@ -9,6 +10,8 @@ const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
+
+// Step 2
 const button = document.createElement("button");
 button.innerText = "❤️ A Normal Button ❤️";
 button.style.fontSize = "1.5rem";
@@ -18,8 +21,10 @@ button.style.padding = "20px 40px";
 let counter: number = 0;
 let growthRate: number = 0;
 
+
+// Step 3 SetInterval
 setInterval(() => {
-  counter += growthRate; // Growth 
+  counter += growthRate; // Growth
   counterDiv.innerText = `${counter.toFixed(2)} ❤️`;
   if (counter >= 10) {
     upgradeButton.disabled = false;
@@ -30,6 +35,8 @@ setInterval(() => {
 
 let lastTime = performance.now();
 
+
+// Step 4 requestAnimationFrame
 function updateCounter(currentTime: number) {
   const deltaTime = (currentTime - lastTime) / 1000; // Calculate time difference in seconds
   lastTime = currentTime;
@@ -69,6 +76,8 @@ button.addEventListener("mouseleave", () => {
 
 let upgradeCounter: number = 0;
 
+
+// Step 5 Upgrade button
 const upgradeButton = document.createElement("button");
 upgradeButton.innerText = "🤡 Purchase Upgrade ( 10 ❤️ )";
 upgradeButton.style.fontSize = "1.5rem";
