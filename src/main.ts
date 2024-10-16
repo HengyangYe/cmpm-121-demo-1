@@ -18,9 +18,9 @@ button.style.padding = "20px 40px";
 let counter: number = 0;
 
 setInterval(() => {
-    counter++;
-    counterDiv.innerText = `${counter} ❤️`;
-  }, 1000);
+  counter++;
+  counterDiv.innerText = `${counter} ❤️`;
+}, 1000);
 
 const counterDiv = document.createElement("div");
 counterDiv.innerText = `${counter} ❤️`;
