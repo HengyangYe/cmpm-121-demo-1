@@ -22,7 +22,6 @@ counterDiv.innerText = `${counter} ❤️`;
 counterDiv.style.fontSize = "1.5rem";
 counterDiv.style.marginTop = "20px";
 
-
 button.addEventListener("click", () => {
   counter++;
   counterDiv.innerText = `${counter} ❤️`;
