@@ -17,16 +17,16 @@ button.style.fontWeight = "bold";
 button.style.borderWidth = "5px";
 
 button.addEventListener("mousedown", () => {
-    button.style.transform = "scale(0.95)";
-    button.style.transition = "transform 0.1s ease";
-  });
-  
-  button.addEventListener("mouseup", () => {
-    button.style.transform = "scale(1)";
-    button.style.transition = "transform 0.1s ease";
-  });
-  
-  button.addEventListener("mouseleave", () => {
-    button.style.transform = "scale(1)";
-  });
+  button.style.transform = "scale(0.95)";
+  button.style.transition = "transform 0.1s ease";
+});
+
+button.addEventListener("mouseup", () => {
+  button.style.transform = "scale(1)";
+  button.style.transition = "transform 0.1s ease";
+});
+
+button.addEventListener("mouseleave", () => {
+  button.style.transform = "scale(1)";
+});
 app.appendChild(button);
