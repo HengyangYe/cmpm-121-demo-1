@@ -18,9 +18,20 @@ button.style.padding = "20px 40px";
 let counter: number = 0;
 
 setInterval(() => {
-  counter++;
-  counterDiv.innerText = `${counter} ❤️`;
-}, 1000);
+    counter++;
+    counterDiv.innerText = `${counter} ❤️`;
+  }, 1000);
+  let lastTime = performance.now();
+  
+  function updateCounter(currentTime: number) {
+    const deltaTime = (currentTime - lastTime) / 1000; // Calculate time difference in seconds
+    lastTime = currentTime;
+    counter += deltaTime; // Increment counter based on elapsed time
+    counterDiv.innerText = `${counter.toFixed(2)} ❤️`;
+    requestAnimationFrame(updateCounter);
+  }
+  
+  requestAnimationFrame(updateCounter)
 
 const counterDiv = document.createElement("div");
 counterDiv.innerText = `${counter} ❤️`;
