@@ -2,20 +2,27 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-// Step 1
-const gameName = "My L❤️vely game";
+// Step 1 
+const gameName = "L❤️vely game";
 document.title = gameName;
 
 const header = document.createElement("h1");
 header.innerHTML = gameName;
+header.style.textAlign = "center"; 
+header.style.position = "flex"; 
+header.style.top = "0";             
+header.style.width = "100%";        
+header.style.marginTop = "10px";    
+
 app.append(header);
 
-// Step 2
+// Step 2 
 const button = document.createElement("button");
-button.innerText = "❤️ A Normal Button ❤️";
+button.innerText = "😢 Number of Cries";
 button.style.fontSize = "1.5rem";
 button.style.fontWeight = "bold";
 button.style.padding = "20px 40px";
+button.style.marginTop = "60px";  // Makesure space at top
 
 let counter: number = 0;
 let growthRate: number = 0;
@@ -23,13 +30,13 @@ let growthRate: number = 0;
 // Step 3 SetInterval
 setInterval(() => {
   counter += growthRate; // Growth
-  counterDiv.innerText = `${counter.toFixed(2)} ❤️`;
+  counterDiv.innerText = `${counter.toFixed(2)} Forgiveness points`;
   updateButtonStates();
 }, 1000);
 
 button.addEventListener("click", () => {
   counter++;
-  counterDiv.innerText = `${counter} ❤️`;
+  counterDiv.innerText = `${counter} Forgiveness points`;
   updateButtonStates();
 });
 
@@ -54,22 +61,20 @@ function updateCounter(currentTime: number) {
   const deltaTime = (currentTime - lastTime) / 1000; // Calculate time difference in seconds
   lastTime = currentTime;
   counter += deltaTime; // Increment counter based on elapsed time
-  counterDiv.innerText = `${counter.toFixed(2)} ❤️`;
+  counterDiv.innerText = `${counter.toFixed(2)} Forgiveness points`;
   requestAnimationFrame(updateCounter);
 }
 
 requestAnimationFrame(updateCounter);
 
 const counterDiv = document.createElement("div");
-counterDiv.innerText = `${counter} ❤️`;
+counterDiv.innerText = `${counter} Forgiveness points`;
 counterDiv.style.fontSize = "1.5rem";
 counterDiv.style.marginTop = "20px";
 
-
 // Step 5,6,7 =>
-// Display the growth rate
 const growthRateDiv = document.createElement("div");
-growthRateDiv.innerText = `Growth Rate: ${growthRate.toFixed(2)} units/sec`;
+growthRateDiv.innerText = `Forgiveness Rate: ${growthRate.toFixed(2)} points/sec`;
 growthRateDiv.style.fontSize = "1.5rem";
 growthRateDiv.style.marginTop = "10px";
 
@@ -89,35 +94,35 @@ function calculateNewPrice(basePrice: number, purchaseCount: number): number {
 }
 
 const upgradeAButton = document.createElement("button");
-upgradeAButton.innerText = `🤡 Purchase Upgrade A (${basePriceA.toFixed(2)} ❤️)`;
+upgradeAButton.innerText = `🎧 Listen to excuses (${basePriceA.toFixed(2)} Forgiveness)`;
 upgradeAButton.style.fontSize = "1.5rem";
 upgradeAButton.style.marginTop = "10px";
 upgradeAButton.disabled = true;
 
 const upgradeBButton = document.createElement("button");
-upgradeBButton.innerText = `🤡 Purchase Upgrade B (${basePriceB.toFixed(2)} ❤️)`;
+upgradeBButton.innerText = `💔 Regain trust (${basePriceB.toFixed(2)} Forgiveness)`;
 upgradeBButton.style.fontSize = "1.5rem";
 upgradeBButton.style.marginTop = "10px";
 upgradeBButton.disabled = true;
 
 const upgradeCButton = document.createElement("button");
-upgradeCButton.innerText = `🤡 Purchase Upgrade C (${basePriceC.toFixed(2)} ❤️)`;
+upgradeCButton.innerText = `❤️ Save the relationship (${basePriceC.toFixed(2)} Forgiveness)`;
 upgradeCButton.style.fontSize = "1.5rem";
 upgradeCButton.style.marginTop = "10px";
 upgradeCButton.disabled = true;
 
 const upgradeCounterADiv = document.createElement("div");
-upgradeCounterADiv.innerText = `${upgradeCounterA} Upgrade A purchased (0.1 units/sec)`;
+upgradeCounterADiv.innerText = `${upgradeCounterA} excuses listened (0.1 Forgiveness/sec)`;
 upgradeCounterADiv.style.fontSize = "1.5rem";
 upgradeCounterADiv.style.marginTop = "5px";
 
 const upgradeCounterBDiv = document.createElement("div");
-upgradeCounterBDiv.innerText = `${upgradeCounterB} Upgrade B purchased (2.0 units/sec)`;
+upgradeCounterBDiv.innerText = `${upgradeCounterB} trust regained (2.0 Forgiveness/sec)`;
 upgradeCounterBDiv.style.fontSize = "1.5rem";
 upgradeCounterBDiv.style.marginTop = "5px";
 
 const upgradeCounterCDiv = document.createElement("div");
-upgradeCounterCDiv.innerText = `${upgradeCounterC} Upgrade C purchased (50 units/sec)`;
+upgradeCounterCDiv.innerText = `${upgradeCounterC} relationship saved (50 Forgiveness/sec)`;
 upgradeCounterCDiv.style.fontSize = "1.5rem";
 upgradeCounterCDiv.style.marginTop = "5px";
 
@@ -128,8 +133,8 @@ upgradeAButton.addEventListener("click", () => {
     growthRate += 0.1;
     upgradeCounterA++;
     updateButtonStates();
-    upgradeAButton.innerText = `🤡 Purchase Upgrade A (${calculateNewPrice(basePriceA, upgradeCounterA).toFixed(2)} ❤️)`;
-    upgradeCounterADiv.innerText = `${upgradeCounterA} Upgrade A purchased`;
+    upgradeAButton.innerText = `🎧 Listen to excuses (${calculateNewPrice(basePriceA, upgradeCounterA).toFixed(2)} Forgiveness)`;
+    upgradeCounterADiv.innerText = `${upgradeCounterA} excuses listened`;
   }
 });
 
@@ -140,8 +145,8 @@ upgradeBButton.addEventListener("click", () => {
     growthRate += 2.0;
     upgradeCounterB++;
     updateButtonStates();
-    upgradeBButton.innerText = `🤡 Purchase Upgrade B (${calculateNewPrice(basePriceB, upgradeCounterB).toFixed(2)} ❤️)`;
-    upgradeCounterBDiv.innerText = `${upgradeCounterB} Upgrade B purchased`;
+    upgradeBButton.innerText = `💔 Regain trust (${calculateNewPrice(basePriceB, upgradeCounterB).toFixed(2)} Forgiveness)`;
+    upgradeCounterBDiv.innerText = `${upgradeCounterB} trust regained`;
   }
 });
 
@@ -152,40 +157,23 @@ upgradeCButton.addEventListener("click", () => {
     growthRate += 50;
     upgradeCounterC++;
     updateButtonStates();
-    upgradeCButton.innerText = `🤡 Purchase Upgrade C (${calculateNewPrice(basePriceC, upgradeCounterC).toFixed(2)} ❤️)`;
-    upgradeCounterCDiv.innerText = `${upgradeCounterC} Upgrade C purchased`;
+    upgradeCButton.innerText = `❤️ Save the relationship (${calculateNewPrice(basePriceC, upgradeCounterC).toFixed(2)} Forgiveness)`;
+    upgradeCounterCDiv.innerText = `${upgradeCounterC} relationship saved`;
   }
 });
 
 // Update button states based on current counter and price
 function updateButtonStates() {
-  upgradeAButton.disabled = counter < calculateNewPrice(basePriceA, upgradeCounterA);
-  upgradeBButton.disabled = counter < calculateNewPrice(basePriceB, upgradeCounterB);
-  upgradeCButton.disabled = counter < calculateNewPrice(basePriceC, upgradeCounterC);
+  upgradeAButton.disabled =
+    counter < calculateNewPrice(basePriceA, upgradeCounterA);
+  upgradeBButton.disabled =
+    counter < calculateNewPrice(basePriceB, upgradeCounterB);
+  upgradeCButton.disabled =
+    counter < calculateNewPrice(basePriceC, upgradeCounterC);
 
-  counterDiv.innerText = `${counter.toFixed(2)} ❤️`;
-  growthRateDiv.innerText = `Growth Rate: ${growthRate.toFixed(2)} units/sec`;
+  counterDiv.innerText = `${counter.toFixed(2)} Forgiveness points`;
+  growthRateDiv.innerText = `Forgiveness Rate: ${growthRate.toFixed(2)} points/sec`;
 }
-
-button.addEventListener("click", () => {
-  counter++;
-  counterDiv.innerText = `${counter} ❤️`;
-  updateButtonStates();
-});
-
-button.addEventListener("mousedown", () => {
-  button.style.transform = "scale(0.95)";
-  button.style.transition = "transform 0.1s ease";
-});
-
-button.addEventListener("mouseup", () => {
-  button.style.transform = "scale(1)";
-  button.style.transition = "transform 0.1s ease";
-});
-
-button.addEventListener("mouseleave", () => {
-  button.style.transform = "scale(1)";
-});
 
 // Append elements
 app.appendChild(button);
