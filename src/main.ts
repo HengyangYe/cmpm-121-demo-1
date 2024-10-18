@@ -24,22 +24,28 @@ let growthRate: number = 0;
 setInterval(() => {
   counter += growthRate; // Growth
   counterDiv.innerText = `${counter.toFixed(2)} ❤️`;
-  if (counter >= 10) {
-    upgradeAButton.disabled = false;
-  } else {
-    upgradeAButton.disabled = true;
-  }
-  if (counter >= 100) {
-    upgradeBButton.disabled = false;
-  } else {
-    upgradeBButton.disabled = true;
-  }
-  if (counter >= 1000) {
-    upgradeCButton.disabled = false;
-  } else {
-    upgradeCButton.disabled = true;
-  }
+  updateButtonStates();
 }, 1000);
+
+button.addEventListener("click", () => {
+  counter++;
+  counterDiv.innerText = `${counter} ❤️`;
+  updateButtonStates();
+});
+
+button.addEventListener("mousedown", () => {
+  button.style.transform = "scale(0.95)";
+  button.style.transition = "transform 0.1s ease";
+});
+
+button.addEventListener("mouseup", () => {
+  button.style.transform = "scale(1)";
+  button.style.transition = "transform 0.1s ease";
+});
+
+button.addEventListener("mouseleave", () => {
+  button.style.transform = "scale(1)";
+});
 
 let lastTime = performance.now();
 
@@ -59,31 +65,43 @@ counterDiv.innerText = `${counter} ❤️`;
 counterDiv.style.fontSize = "1.5rem";
 counterDiv.style.marginTop = "20px";
 
+
+// Step 5,6,7 =>
 // Display the growth rate
 const growthRateDiv = document.createElement("div");
 growthRateDiv.innerText = `Growth Rate: ${growthRate.toFixed(2)} units/sec`;
 growthRateDiv.style.fontSize = "1.5rem";
 growthRateDiv.style.marginTop = "10px";
 
-// Upgrade buttons and counters
+// Price increase factor
 let upgradeCounterA: number = 0;
 let upgradeCounterB: number = 0;
 let upgradeCounterC: number = 0;
 
+const basePriceA = 10;
+const basePriceB = 100;
+const basePriceC = 1000;
+const priceIncreaseFactor = 1.15;
+
+// Calculate new price
+function calculateNewPrice(basePrice: number, purchaseCount: number): number {
+  return basePrice * Math.pow(priceIncreaseFactor, purchaseCount);
+}
+
 const upgradeAButton = document.createElement("button");
-upgradeAButton.innerText = "🤡 Purchase Upgrade A (10 ❤️)";
+upgradeAButton.innerText = `🤡 Purchase Upgrade A (${basePriceA.toFixed(2)} ❤️)`;
 upgradeAButton.style.fontSize = "1.5rem";
 upgradeAButton.style.marginTop = "10px";
 upgradeAButton.disabled = true;
 
 const upgradeBButton = document.createElement("button");
-upgradeBButton.innerText = "🤡 Purchase Upgrade B (100 ❤️)";
+upgradeBButton.innerText = `🤡 Purchase Upgrade B (${basePriceB.toFixed(2)} ❤️)`;
 upgradeBButton.style.fontSize = "1.5rem";
 upgradeBButton.style.marginTop = "10px";
 upgradeBButton.disabled = true;
 
 const upgradeCButton = document.createElement("button");
-upgradeCButton.innerText = "🤡 Purchase Upgrade C (1000 ❤️)";
+upgradeCButton.innerText = `🤡 Purchase Upgrade C (${basePriceC.toFixed(2)} ❤️)`;
 upgradeCButton.style.fontSize = "1.5rem";
 upgradeCButton.style.marginTop = "10px";
 upgradeCButton.disabled = true;
@@ -103,42 +121,56 @@ upgradeCounterCDiv.innerText = `${upgradeCounterC} Upgrade C purchased (50 units
 upgradeCounterCDiv.style.fontSize = "1.5rem";
 upgradeCounterCDiv.style.marginTop = "5px";
 
+// Upgrade A
 upgradeAButton.addEventListener("click", () => {
-  if (counter >= 10) {
-    counter -= 10;
+  if (counter >= calculateNewPrice(basePriceA, upgradeCounterA)) {
+    counter -= calculateNewPrice(basePriceA, upgradeCounterA);
     growthRate += 0.1;
-    counterDiv.innerText = `${counter.toFixed(2)} ❤️`;
     upgradeCounterA++;
+    updateButtonStates();
+    upgradeAButton.innerText = `🤡 Purchase Upgrade A (${calculateNewPrice(basePriceA, upgradeCounterA).toFixed(2)} ❤️)`;
     upgradeCounterADiv.innerText = `${upgradeCounterA} Upgrade A purchased`;
   }
 });
 
+// Upgrade B
 upgradeBButton.addEventListener("click", () => {
-  if (counter >= 100) {
-    counter -= 100;
+  if (counter >= calculateNewPrice(basePriceB, upgradeCounterB)) {
+    counter -= calculateNewPrice(basePriceB, upgradeCounterB);
     growthRate += 2.0;
-    counterDiv.innerText = `${counter.toFixed(2)} ❤️`;
     upgradeCounterB++;
+    updateButtonStates();
+    upgradeBButton.innerText = `🤡 Purchase Upgrade B (${calculateNewPrice(basePriceB, upgradeCounterB).toFixed(2)} ❤️)`;
     upgradeCounterBDiv.innerText = `${upgradeCounterB} Upgrade B purchased`;
   }
 });
 
+// Upgrade C
 upgradeCButton.addEventListener("click", () => {
-  if (counter >= 1000) {
-    counter -= 1000;
+  if (counter >= calculateNewPrice(basePriceC, upgradeCounterC)) {
+    counter -= calculateNewPrice(basePriceC, upgradeCounterC);
     growthRate += 50;
-    counterDiv.innerText = `${counter.toFixed(2)} ❤️`;
     upgradeCounterC++;
+    updateButtonStates();
+    upgradeCButton.innerText = `🤡 Purchase Upgrade C (${calculateNewPrice(basePriceC, upgradeCounterC).toFixed(2)} ❤️)`;
     upgradeCounterCDiv.innerText = `${upgradeCounterC} Upgrade C purchased`;
   }
 });
 
+// Update button states based on current counter and price
+function updateButtonStates() {
+  upgradeAButton.disabled = counter < calculateNewPrice(basePriceA, upgradeCounterA);
+  upgradeBButton.disabled = counter < calculateNewPrice(basePriceB, upgradeCounterB);
+  upgradeCButton.disabled = counter < calculateNewPrice(basePriceC, upgradeCounterC);
+
+  counterDiv.innerText = `${counter.toFixed(2)} ❤️`;
+  growthRateDiv.innerText = `Growth Rate: ${growthRate.toFixed(2)} units/sec`;
+}
+
 button.addEventListener("click", () => {
   counter++;
   counterDiv.innerText = `${counter} ❤️`;
-  if (counter >= 10) {
-    upgradeAButton.disabled = false;
-  }
+  updateButtonStates();
 });
 
 button.addEventListener("mousedown", () => {
