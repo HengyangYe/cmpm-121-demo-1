@@ -16,7 +16,7 @@ const CONFIG = {
   },
   GAME: {
     GROWTH_RATE_MULTIPLIER: 1.15, // Multiplier for price growth
-  }
+  },
 };
 
 // Step 1: Set up game name and header
@@ -143,7 +143,9 @@ availableItems.forEach((item) => {
 
 // Exponential growth function for pricing
 function calculateNewPrice(basePrice: number, purchaseCount: number): number {
-  return basePrice * Math.pow(CONFIG.GAME.GROWTH_RATE_MULTIPLIER, purchaseCount);
+  return (
+    basePrice * Math.pow(CONFIG.GAME.GROWTH_RATE_MULTIPLIER, purchaseCount)
+  );
 }
 
 // Update button and display states
