@@ -2,7 +2,24 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-// Step 1
+// Constants for styling and game configuration
+const CONFIG = {
+  STYLING: {
+    BUTTON_FONT_SIZE: "1.5rem",
+    BUTTON_PADDING: "20px 40px",
+    MAIN_BUTTON_MARGIN_TOP: "60px",
+    ITEM_BUTTON_MARGIN_TOP: "10px",
+    COUNTER_FONT_SIZE: "1.5rem",
+    COUNTER_MARGIN_TOP: "20px",
+    GROWTH_RATE_MARGIN_TOP: "10px",
+    ITEM_COUNTER_MARGIN_TOP: "5px",
+  },
+  GAME: {
+    GROWTH_RATE_MULTIPLIER: 1.15, // Multiplier for price growth
+  }
+};
+
+// Step 1: Set up game name and header
 const gameName = "L❤️vely game";
 document.title = gameName;
 
@@ -19,10 +36,10 @@ app.append(header);
 // Step 2: Main Action Button
 const mainActionButton = document.createElement("button");
 mainActionButton.innerText = "😢 Number of Cries";
-mainActionButton.style.fontSize = "1.5rem";
+mainActionButton.style.fontSize = CONFIG.STYLING.BUTTON_FONT_SIZE;
 mainActionButton.style.fontWeight = "bold";
-mainActionButton.style.padding = "20px 40px";
-mainActionButton.style.marginTop = "60px"; // Ensures space at the top
+mainActionButton.style.padding = CONFIG.STYLING.BUTTON_PADDING;
+mainActionButton.style.marginTop = CONFIG.STYLING.MAIN_BUTTON_MARGIN_TOP;
 
 let counter: number = 0;
 let growthRate: number = 0;
@@ -30,14 +47,14 @@ let growthRate: number = 0;
 // Main Counter Display
 const mainCounterDisplay = document.createElement("div");
 mainCounterDisplay.innerText = `${counter} Forgiveness points`;
-mainCounterDisplay.style.fontSize = "1.5rem";
-mainCounterDisplay.style.marginTop = "20px";
+mainCounterDisplay.style.fontSize = CONFIG.STYLING.COUNTER_FONT_SIZE;
+mainCounterDisplay.style.marginTop = CONFIG.STYLING.COUNTER_MARGIN_TOP;
 
 // Growth Rate Display
 const growthRateDisplay = document.createElement("div");
 growthRateDisplay.innerText = `Forgiveness Rate: ${growthRate.toFixed(2)} points/sec`;
-growthRateDisplay.style.fontSize = "1.5rem";
-growthRateDisplay.style.marginTop = "10px";
+growthRateDisplay.style.fontSize = CONFIG.STYLING.COUNTER_FONT_SIZE;
+growthRateDisplay.style.marginTop = CONFIG.STYLING.GROWTH_RATE_MARGIN_TOP;
 
 // Step 3 SetInterval for growth
 setInterval(() => {
@@ -69,7 +86,7 @@ function resetButtonEffect() {
 // Step 4 requestAnimationFrame for counter update
 let lastTime = performance.now();
 function updateCounter(currentTime: number) {
-  const deltaTime = (currentTime - lastTime) / 1000; // Calculate time difference in seconds
+  const deltaTime = (currentTime - lastTime) / 1000;
   lastTime = currentTime;
   counter += deltaTime;
   mainCounterDisplay.innerText = `${counter.toFixed(2)} Forgiveness points`;
@@ -99,14 +116,14 @@ const itemCounters: { [key: string]: number } = {
 availableItems.forEach((item) => {
   const itemButton = document.createElement("button");
   itemButton.innerText = `${item.name} (${item.cost.toFixed(2)} Forgiveness)`;
-  itemButton.style.fontSize = "1.5rem";
-  itemButton.style.marginTop = "10px";
+  itemButton.style.fontSize = CONFIG.STYLING.BUTTON_FONT_SIZE;
+  itemButton.style.marginTop = CONFIG.STYLING.ITEM_BUTTON_MARGIN_TOP;
   itemButton.disabled = true;
 
   const itemCounterDisplay = document.createElement("div");
   itemCounterDisplay.innerText = `${itemCounters[item.name]} ${item.name} purchased (${item.rate} Forgiveness/sec)`;
-  itemCounterDisplay.style.fontSize = "1.5rem";
-  itemCounterDisplay.style.marginTop = "5px";
+  itemCounterDisplay.style.fontSize = CONFIG.STYLING.COUNTER_FONT_SIZE;
+  itemCounterDisplay.style.marginTop = CONFIG.STYLING.ITEM_COUNTER_MARGIN_TOP;
 
   itemButton.addEventListener("click", () => {
     const cost = calculateNewPrice(item.cost, itemCounters[item.name]);
@@ -126,7 +143,7 @@ availableItems.forEach((item) => {
 
 // Exponential growth function for pricing
 function calculateNewPrice(basePrice: number, purchaseCount: number): number {
-  return basePrice * Math.pow(1.15, purchaseCount);
+  return basePrice * Math.pow(CONFIG.GAME.GROWTH_RATE_MULTIPLIER, purchaseCount);
 }
 
 // Update button and display states
